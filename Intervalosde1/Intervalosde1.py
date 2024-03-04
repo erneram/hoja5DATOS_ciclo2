@@ -21,9 +21,10 @@ class Programa:
             if self.estado == "new":
                 self.t_inicial = self.env.now
                 print(f"Proceso {self.name} pidiendo memoria RAM")
-                yield self.ram.get(self.memoria)
+                
                 yield self.env.timeout(1)
                 if self.memoria <= self.ram.level:
+                    yield self.ram.get(self.memoria)
                     print(f"Proceso {self.name} obtuvo {self.memoria} de memoria")
                     self.estado = "ready"
                     break
@@ -35,6 +36,7 @@ class Programa:
         yield self.env.timeout(1)
         yield self.ram.put(self.memoria)
         self.estado = "new"
+        
 
     def usar_cpu(self):
         while True:
@@ -59,7 +61,7 @@ class Programa:
                         break
 
     def promedio_tiempo(self):
-        self.writer.writerow([self.name, self.t_inicial - self.t_final])
+        self.writer.writerow([-1 *(self.t_final - self.t_inicial)])
         
 
     def run(self):
@@ -78,70 +80,70 @@ def simular(env, ram, procesador, amount_process, writer, intervalo):
 
 
 # ----------------------25 operaciones----------------------
-nombre_archivo = "./Intervalosde6/dataTime/25_procesos.csv"
+nombre_archivo = "./Intervalosde1/dataTime/25_procesos.csv"
 with open(nombre_archivo, 'w', newline='') as archivo_csv:
     escritor = csv.writer(archivo_csv)
     env = simpy.Environment()
     ram = simpy.Container(env, init=100, capacity=100)
     procesador = simpy.Resource(env, capacity=1)
     amount_process = 25
-    intervalo = 6
+    intervalo = 1
 
     print("Iniciando simulación")
     env.process(simular(env, ram, procesador, amount_process, escritor, intervalo))
     env.run()
 
 # ----------------------50 operaciones----------------------
-nombre_archivo = "./Intervalosde6/dataTime/50_procesos.csv"
+nombre_archivo = "./Intervalosde1/dataTime/50_procesos.csv"
 with open(nombre_archivo, 'w', newline='') as archivo_csv:
     escritor = csv.writer(archivo_csv)
     env = simpy.Environment()
     ram = simpy.Container(env, init=100, capacity=100)
     procesador = simpy.Resource(env, capacity=1)
     amount_process = 50
-    intervalo = 6
+    intervalo = 1
 
     print("Iniciando simulación")
     env.process(simular(env, ram, procesador, amount_process, escritor, intervalo))
     env.run()
 
 # ----------------------100 operaciones----------------------
-nombre_archivo = "./Intervalosde6/dataTime/100_procesos.csv"
+nombre_archivo = "./Intervalosde1/dataTime/100_procesos.csv"
 with open(nombre_archivo, 'w', newline='') as archivo_csv:
     escritor = csv.writer(archivo_csv)
     env = simpy.Environment()
     ram = simpy.Container(env, init=100, capacity=100)
     procesador = simpy.Resource(env, capacity=1)
     amount_process = 100
-    intervalo = 6
+    intervalo = 1
 
     print("Iniciando simulación")
     env.process(simular(env, ram, procesador, amount_process, escritor, intervalo))
     env.run()
 
 # ----------------------150 operaciones----------------------
-nombre_archivo = "./Intervalosde6/dataTime/150_procesos.csv"
+nombre_archivo = "./Intervalosde1/dataTime/150_procesos.csv"
 with open(nombre_archivo, 'w', newline='') as archivo_csv:
     escritor = csv.writer(archivo_csv)
     env = simpy.Environment()
     ram = simpy.Container(env, init=100, capacity=100)
     procesador = simpy.Resource(env, capacity=1)
     amount_process = 150
-    intervalo = 6
+    intervalo = 1
     
     print("Iniciando simulación")
     env.process(simular(env, ram, procesador, amount_process, escritor, intervalo))
     env.run()
 
 # ----------------------200 operaciones----------------------
-nombre_archivo = "./Intervalosde6/dataTime/200_procesos.csv"
+nombre_archivo = "./Intervalosde1/dataTime/200_procesos.csv"
 with open(nombre_archivo, 'w', newline='') as archivo_csv:
     escritor = csv.writer(archivo_csv)
     env = simpy.Environment()
     ram = simpy.Container(env, init=100, capacity=100)
     procesador = simpy.Resource(env, capacity=1)
     amount_process = 200
-    intervalo = 6
+    intervalo = 1
     
     print("Iniciando simulación")
     env.process(simular(env, ram, procesador, amount_process, escritor, intervalo))

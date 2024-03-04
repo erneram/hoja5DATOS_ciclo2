@@ -21,9 +21,10 @@ class Programa:
             if self.estado == "new":
                 self.t_inicial = self.env.now
                 print(f"Proceso {self.name} pidiendo memoria RAM")
-                yield self.ram.get(self.memoria)
+                
                 yield self.env.timeout(1)
                 if self.memoria <= self.ram.level:
+                    yield self.ram.get(self.memoria)
                     print(f"Proceso {self.name} obtuvo {self.memoria} de memoria")
                     self.estado = "ready"
                     break
@@ -35,6 +36,7 @@ class Programa:
         yield self.env.timeout(1)
         yield self.ram.put(self.memoria)
         self.estado = "new"
+        
 
     def usar_cpu(self):
         while True:
@@ -59,7 +61,7 @@ class Programa:
                         break
 
     def promedio_tiempo(self):
-        self.writer.writerow([self.name, self.t_inicial - self.t_final])
+        self.writer.writerow([-1 *(self.t_final - self.t_inicial)])
         
 
     def run(self):
